@@ -4,8 +4,13 @@
 \alias{file_coverage}
 \title{Calculate test coverage for sets of files}
 \usage{
-file_coverage(source_files, test_files, line_exclusions = NULL,
-  function_exclusions = NULL, parent_env = parent.frame())
+file_coverage(
+  source_files,
+  test_files,
+  line_exclusions = NULL,
+  function_exclusions = NULL,
+  parent_env = parent.frame()
+)
 }
 \arguments{
 \item{source_files}{Character vector of source files with function
@@ -18,7 +23,7 @@ functions}
 each file.}
 
 \item{function_exclusions}{a vector of regular expressions matching function
-names to exclude. Example \code{print\\\.} to match print methods.}
+names to exclude. Example \verb{print\\\\\\.} to match print methods.}
 
 \item{parent_env}{The parent environment to use when sourcing the files.}
 }
@@ -26,4 +31,11 @@ names to exclude. Example \code{print\\\.} to match print methods.}
 The files in \code{source_files} are first sourced into a new environment
 to define functions to be checked. Then they are instrumented to track
 coverage and the files in \code{test_files} are sourced.
+}
+\examples{
+# For the purpose of this example, save code containing code and tests to files
+cat("add <- function(x, y) { x + y }", file="add.R")
+cat("add(1, 2) == 3", file="add_test.R")
+# Use file_coverage() to calculate test coverage
+file_coverage(source_files = "add.R", test_files = "add_test.R")
 }

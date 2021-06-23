@@ -31,6 +31,8 @@ ci_vars <- c(
   "DRONE_COMMIT" = NA,
   "GIT_BRANCH" = NA,
   "GIT_COMMIT" = NA,
+  "GITHUB_ACTION" = NA,
+  "GITHUB_REPOSTIORY" = NA,
   "JENKINS_URL" = NA,
   "REVISION" = NA,
   "SEMAPHORE" = NA,
@@ -55,7 +57,7 @@ test_that("it generates a properly formatted json file", {
 
   withr::with_envvar(ci_vars,
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
       `covr:::local_branch` = function() "master",
       `covr:::current_commit` = function() "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
@@ -76,7 +78,7 @@ test_that("it adds a flags argument to the query if specified", {
 
   withr::with_envvar(ci_vars,
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
       `covr:::local_branch` = function() "master",
       `covr:::current_commit` = function() "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
@@ -91,7 +93,7 @@ test_that("it works with local repos", {
   withr::with_envvar(ci_vars, {
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
       `covr:::local_branch` = function() "master",
       `covr:::current_commit` = function() "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
@@ -108,7 +110,7 @@ test_that("it works with local repos and explicit branch and commit", {
   withr::with_envvar(ci_vars, {
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov, branch = "master", commit = "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3"),
@@ -125,7 +127,7 @@ test_that("it adds the token to the query if available", {
       "CODECOV_TOKEN" = "codecov_test"
       ),
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
       `covr:::local_branch` = function() "master",
       `covr:::current_commit` = function() "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
@@ -142,7 +144,7 @@ test_that("it adds the token to the query if available", {
 test_that("it looks for token in a .yml file", {
   withr::with_envvar(c(ci_vars),
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
       `covr:::local_branch` = function() "master",
       `covr:::current_commit` = function() "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3",
@@ -168,7 +170,7 @@ test_that("it works with jenkins", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),
@@ -196,7 +198,7 @@ test_that("it works with travis normal builds", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),
@@ -226,7 +228,7 @@ test_that("it works with travis pull requests", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),
@@ -254,7 +256,7 @@ test_that("it works with codeship", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),
@@ -280,7 +282,7 @@ test_that("it works with circleci", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),
@@ -306,7 +308,7 @@ test_that("it works with semaphore", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),
@@ -332,7 +334,7 @@ test_that("it works with drone", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),
@@ -360,7 +362,7 @@ test_that("it works with AppVeyor", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),
@@ -386,7 +388,7 @@ test_that("it works with Wercker", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),
@@ -413,7 +415,7 @@ test_that("it works with GitLab", {
       ),
 
     with_mock(
-      `httr::POST` = function(...) list(...),
+      `httr::RETRY` = function(...) list(...),
       `httr::content` = identity,
 
       res <- codecov(coverage = cov),

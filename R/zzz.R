@@ -1,9 +1,11 @@
 .onLoad <- function(libname, pkgname) { # nolint
+  rex::register_shortcuts("covr")
   op <- options()
   op_covr <- list(
     covr.covrignore = Sys.getenv("COVR_COVRIGNORE", ".covrignore"),
     covr.gcov = Sys.which("gcov"),
     covr.gcov_args = NULL,
+    covr.gcov_additional_paths = NULL,
     covr.exclude_pattern = rex::rex("#", any_spaces, "nocov"),
     covr.exclude_start = rex::rex("#", any_spaces, "nocov", any_spaces, "start"),
     covr.exclude_end = rex::rex("#", any_spaces, "nocov", any_spaces, "end"),
@@ -17,6 +19,7 @@
 
                  FFLAGS = "-O0 --coverage",
                  FCFLAGS = "-O0 --coverage",
+                 FLIBS = "-lgcov",
 
                  # LDFLAGS is ignored on windows and visa versa
                  LDFLAGS = if (!is_windows()) "--coverage" else NULL,

@@ -4,8 +4,13 @@
 \alias{code_coverage}
 \title{Calculate coverage of code directly}
 \usage{
-code_coverage(source_code, test_code, line_exclusions = NULL,
-  function_exclusions = NULL, ...)
+code_coverage(
+  source_code,
+  test_code,
+  line_exclusions = NULL,
+  function_exclusions = NULL,
+  ...
+)
 }
 \arguments{
 \item{source_code}{A character vector of source code}
@@ -16,7 +21,7 @@ code_coverage(source_code, test_code, line_exclusions = NULL,
 each file.}
 
 \item{function_exclusions}{a vector of regular expressions matching function
-names to exclude. Example \code{print\\\.} to match print methods.}
+names to exclude. Example \verb{print\\\\\\.} to match print methods.}
 
 \item{...}{Additional arguments passed to \code{\link[=file_coverage]{file_coverage()}}}
 }
@@ -24,4 +29,9 @@ names to exclude. Example \code{print\\\.} to match print methods.}
 This function is useful for testing, and is a thin wrapper around
 \code{\link[=file_coverage]{file_coverage()}} because parseData is not populated properly
 unless the functions are defined in a file.
+}
+\examples{
+source <- "add <- function(x, y) { x + y }"
+test <- "add(1, 2) == 3"
+code_coverage(source, test)
 }

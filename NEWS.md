@@ -1,3 +1,52 @@
+# covr (development version)
+
+* Added `covr.record_tests` option. When `TRUE`, this enables the recording of
+  the trace of the tests being executed and adds an itemization of which tests
+  result in the exeuction of each trace. For more details see
+  `?covr.record_tests`
+  `?covr.record_tests` (@dgkf, #463)
+
+* `package_coverage()` now sets the environment variable `R_TESTS` to the tests-startup.R file like R CMD check does (#420)
+
+* `codecov()` is now more robust when `coverage` is not the output from `package_coverage()` and `token` is not provided (#456)
+* `as.data.frame()` now returns an 0 row data frame when there are no functions in a package (#427)
+
+* Fix `parse_gcov` bug when package is stored in directory with regex special characters, see #459
+* Error/warning thrown for, respectively, missing gcov or empty parsed gcov output (@stephematician, #448)
+
+# covr 3.5.1
+
+* Generated files from [cpp11](https://cpp11.r-lib.org/) are now ignored (#437)
+
+* `codecov()` and `coveralls()` now retry failed requests before raising an error (#428, @jameslamb)
+
+# covr 3.5.0
+
+* `codecov()` now supports GitHub Actions for public repositories without having to specify a token.
+
+* New `to_sonarqube()` function added to support SonarQube generic XML format (@nibant, @Delfic, #413).
+
+# covr 3.4.0
+
+* `codecov()` now supports GitHub Actions.
+
+* New `in_covr()` function added to return true if code is being run by covr (#407).
+
+* `file_coverage()`, `environment_coverage()` and `function_coverage()` now set
+  `R_COVR=true`, to be consistent with `package_coverage()` (#407)
+
+# covr 3.3.2
+
+* Fix test failures in the development version of R (4.0.0) (#400)
+
+# covr 3.3.1
+
+* Fix inadvertent regression in return visibility when functions are covered.
+  covr versions prior to 3.3.0 surrounded each statement in `{` blocks. covr
+  3.3.0 switched to using `({`, but this caused an inadvertent regression, as
+  `(` will make the result visible it is the last expression in a function.
+  Using `if (TRUE) {` restores the previous behavior. (#391, #392)
+
 # covr 3.3.0
 
 ## New Features
